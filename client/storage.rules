@@ -1,0 +1,23 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    
+    function isSignedIn() {
+      return request.auth != null;
+    }
+    
+    function isAdmin() {
+      return firestore.get(/databases/(default)/documents/users/$(request.auth.uid)).data.role == 'admin';
+    }
+
+    match /tenders/{allPaths=**} {
+      allow read: if isSignedIn();
+      allow write: if isSignedIn(); // In production, refine to restrict by file type/size
+    }
+
+    match /profiles/{userId}/{allPaths=**} {
+      allow read: if isSignedIn();
+      allow write: if request.auth.uid == userId;
+    }
+  }
+}
