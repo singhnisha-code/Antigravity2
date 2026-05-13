@@ -1,32 +1,33 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Gantt, Task, ViewMode } from 'frappe-gantt-react';
+import { FrappeGantt, Task, ViewMode } from 'frappe-gantt-react';
+import { Moment } from 'moment';
 
 const tasks: Task[] = [
-  {
+  new Task({
     id: 'Task 1',
     name: 'Foundation Piling',
     start: '2026-05-01',
     end: '2026-05-15',
     progress: 100,
     dependencies: '',
-  },
-  {
+  }),
+  new Task({
     id: 'Task 2',
     name: 'Basement Slabbing',
     start: '2026-05-16',
     end: '2026-06-10',
     progress: 45,
     dependencies: 'Task 1',
-  },
-  {
+  }),
+  new Task({
     id: 'Task 3',
     name: 'Structural Pillars',
     start: '2026-06-11',
     end: '2026-07-20',
     progress: 0,
     dependencies: 'Task 2',
-  }
+  })
 ];
 
 const ProjectGantt = () => {
@@ -42,14 +43,13 @@ const ProjectGantt = () => {
       </div>
       
       <div className="gantt-container overflow-x-auto">
-        <Gantt
+        <FrappeGantt
           tasks={tasks}
           viewMode={ViewMode.Month}
-          onClick={(task) => console.log(task)}
-          onDateChange={(task, start, end) => console.log(task, start, end)}
-          onProgressChange={(task, progress) => console.log(task, progress)}
-          onTasksChange={(tasks) => console.log(tasks)}
-          columnWidth={100}
+          onClick={(task: Task) => console.log(task)}
+          onDateChange={(task: Task, start: Moment, end: Moment) => console.log(task, start, end)}
+          onProgressChange={(task: Task, progress: number) => console.log(task, progress)}
+          onTasksChange={(tasks: Task[]) => console.log(tasks)}
         />
       </div>
 
@@ -67,3 +67,4 @@ const ProjectGantt = () => {
 };
 
 export default ProjectGantt;
+

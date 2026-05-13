@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { MoreHorizontal, Plus, Search, Filter, Calendar, MapPin, LayoutList, Trello as Timeline } from 'lucide-react';
+import { MoreHorizontal, Plus, Search, Filter, Calendar, MapPin, LayoutList, Columns as Timeline } from 'lucide-react';
 import NewProjectModal from '../../components/dashboard/NewProjectModal';
 import ProjectGantt from '../../components/dashboard/ProjectGantt';
 import { projectService, Project } from '../../services/projectService';

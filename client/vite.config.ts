@@ -34,11 +34,14 @@ export default defineConfig({
   build: {
     rollupOptions: {
       output: {
-        manualChunks: {
-          'vendor': ['react', 'react-dom', 'react-router-dom', 'framer-motion'],
-          'charts': ['recharts'],
-          'icons': ['lucide-react'],
-          'firebase': ['firebase/app', 'firebase/firestore', 'firebase/auth', 'firebase/storage']
+        manualChunks(id) {
+          if (id.includes('node_modules')) {
+            if (id.includes('react')) return 'vendor';
+            if (id.includes('recharts') || id.includes('chart.js')) return 'charts';
+            if (id.includes('lucide-react')) return 'icons';
+            if (id.includes('firebase')) return 'firebase';
+            return 'vendor';
+          }
         }
       }
     },
