@@ -14,8 +14,10 @@ import {
   Box,
   TrendingUp,
   Clock,
-  IndianRupee
+  IndianRupee,
+  MessageSquare
 } from 'lucide-react';
+
 import { Routes, Route, Link, useLocation } from 'react-router-dom';
 import logo from '../../assets/logo.jpg';
 import NotificationCenter from '../../components/layout/NotificationCenter';
@@ -31,6 +33,8 @@ import InventoryList from './InventoryList';
 import FinancialsView from './FinancialsView';
 import SettingsView from './SettingsView';
 import Overview from './Overview';
+import ReviewManagement from './ReviewManagement';
+
 
 const SidebarItem = ({ icon: Icon, label, path, active, onClick }: any) => (
   <Link to={path} onClick={onClick}>
@@ -54,8 +58,10 @@ const MainDashboard = () => {
     { icon: Users, label: 'Staff & HR', path: '/dashboard/staff', roles: ['admin', 'manager'] },
     { icon: Clock, label: 'Attendance', path: '/dashboard/attendance', roles: ['admin', 'manager', 'user'] },
     { icon: IndianRupee, label: 'Financials', path: '/dashboard/financials', roles: ['admin'] },
+    { icon: MessageSquare, label: 'Reviews', path: '/dashboard/reviews', roles: ['admin'] },
     { icon: Settings, label: 'Settings', path: '/dashboard/settings', roles: ['admin'] },
   ];
+
 
   const filteredItems = menuItems.filter(item => 
     !profile || item.roles.includes(profile.role)
@@ -163,7 +169,9 @@ const MainDashboard = () => {
             <Route path="/staff" element={<StaffList />} />
             <Route path="/attendance" element={<AttendanceView />} />
             <Route path="/financials" element={<FinancialsView />} />
+            <Route path="/reviews" element={<ReviewManagement />} />
             <Route path="/settings" element={<SettingsView />} />
+
           </Routes>
         </div>
       </main>

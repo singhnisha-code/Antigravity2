@@ -2,10 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Globe, Shield, Palette, Bell, History, Activity } from 'lucide-react';
 import { auditService, AuditLog } from '../../services/auditService';
+import { userService, UserProfile } from '../../services/userService';
 
 const SettingsView = () => {
   const [activeTab, setActiveTab] = useState('branding');
   const [logs, setLogs] = useState<AuditLog[]>([]);
+  const [users, setUsers] = useState<UserProfile[]>([]);
 
   useEffect(() => {
     if (activeTab === 'audit') {
@@ -14,7 +16,14 @@ const SettingsView = () => {
       });
       return () => unsubscribe();
     }
+    if (activeTab === 'roles') {
+      const unsubscribe = userService.subscribeUsers((data) => {
+        setUsers(data);
+      });
+      return () => unsubscribe();
+    }
   }, [activeTab]);
+
 
   return (
     <div className="space-y-8">
@@ -102,6 +111,55 @@ const SettingsView = () => {
             </motion.div>
           )}
 
+          {activeTab === 'roles' && (
+            <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} className="space-y-6">
+              <div className="glass-card">
+                <h3 className="text-lg font-bold mb-6 flex items-center gap-2">
+                  <Shield size={20} className="text-primary" />
+                  User Roles & Permissions
+                </h3>
+                <p className="text-xs text-slate-500 mb-6">
+                  Manage administrative access. Only designated super-admins can approve new admin requests.
+                </p>
+                
+                <div className="space-y-4">
+                  {users.length === 0 ? (
+                    <div className="p-8 text-center text-slate-500 text-sm italic">Loading users...</div>
+                  ) : (
+                    users.map((u) => (
+                      <div key={u.uid} className="flex items-center justify-between p-4 bg-white/2 border border-white/5 rounded-xl">
+                        <div className="flex items-center gap-4">
+                          <div className="h-10 w-10 rounded-full bg-secondary border border-white/10 flex items-center justify-center font-bold text-xs">
+                            {u.displayName?.charAt(0) || u.email.charAt(0)}
+                          </div>
+                          <div>
+                            <div className="font-bold text-sm">{u.displayName || 'Anonymous User'}</div>
+                            <div className="text-[10px] text-slate-500 font-mono">{u.email}</div>
+                          </div>
+                        </div>
+                        
+                        <div className="flex items-center gap-4">
+                          <span className={`px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest border ${u.adminApproved ? 'bg-green-500/10 text-green-500 border-green-500/20' : 'bg-slate-500/10 text-slate-400 border-white/5'}`}>
+                            {u.adminApproved ? 'Admin' : 'User'}
+                          </span>
+                          
+                          {u.email !== 'singhmanohar6699@gmail.com' && u.email !== 'nisxsingh6356@gmail.com' && (
+                            <button 
+                              onClick={() => u.adminApproved ? userService.revokeAdmin(u.uid) : userService.approveAdmin(u.uid)}
+                              className={`px-4 py-2 rounded-lg text-[10px] font-bold uppercase tracking-widest transition-all ${u.adminApproved ? 'bg-red-500/10 text-red-500 hover:bg-red-500/20' : 'bg-primary text-secondary hover:scale-105'}`}
+                            >
+                              {u.adminApproved ? 'Revoke' : 'Approve Admin'}
+                            </button>
+                          )}
+                        </div>
+                      </div>
+                    ))
+                  )}
+                </div>
+              </div>
+            </motion.div>
+          )}
+
           {activeTab === 'audit' && (
             <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} className="space-y-6">
               <div className="glass-card !p-0 overflow-hidden">
@@ -152,6 +210,8 @@ const SettingsView = () => {
               </div>
             </motion.div>
           )}
+
+
         </div>
       </div>
     </div>

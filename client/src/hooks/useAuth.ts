@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { onAuthStateChanged, User } from 'firebase/auth';
 import { auth, db } from '../firebase/config';
-import { doc, getDoc } from 'firebase/firestore';
+import { doc, getDoc, setDoc } from 'firebase/firestore';
 
 export interface UserProfile {
   uid: string;
@@ -9,7 +9,13 @@ export interface UserProfile {
   displayName: string | null;
   role: 'admin' | 'manager' | 'user' | 'client';
   companyId?: string;
+  adminApproved?: boolean;
 }
+
+const AUTHORIZED_ADMINS = [
+  'singhmanohar6699@gmail.com',
+  'nisxsingh6356@gmail.com'
+];
 
 export const useAuth = () => {
   const [user, setUser] = useState<User | null>(null);
@@ -25,21 +31,30 @@ export const useAuth = () => {
         const docRef = doc(db, "users", firebaseUser.uid);
         const docSnap = await getDoc(docRef);
         
+        const isAuthorizedAdmin = AUTHORIZED_ADMINS.includes(firebaseUser.email || '');
+
         if (docSnap.exists()) {
+          const data = docSnap.data();
           setProfile({
             uid: firebaseUser.uid,
             email: firebaseUser.email,
             displayName: firebaseUser.displayName,
-            ...docSnap.data() as any
-          });
+            ...data,
+            // Force role to 'user' if not an authorized admin or not approved
+            role: (isAuthorizedAdmin && data.adminApproved) ? 'admin' : 'user'
+          } as UserProfile);
         } else {
-          // Default profile if not in Firestore
-          setProfile({
+          // Create default profile if not in Firestore
+          const newProfile: UserProfile = {
             uid: firebaseUser.uid,
             email: firebaseUser.email,
             displayName: firebaseUser.displayName,
-            role: 'user'
-          });
+            role: 'user',
+            adminApproved: false
+          };
+          
+          await setDoc(docRef, newProfile);
+          setProfile(newProfile);
         }
       } else {
         setProfile(null);
@@ -53,3 +68,4 @@ export const useAuth = () => {
 
   return { user, profile, loading };
 };
+

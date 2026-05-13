@@ -110,8 +110,12 @@ const AttendanceView = () => {
           <div className="glass-card">
              <h3 className="font-bold mb-4">Location Verification</h3>
              <div className="aspect-square bg-white/5 rounded-xl flex items-center justify-center border border-white/10 overflow-hidden relative">
-                <div className="absolute inset-0 bg-[url('https://api.mapbox.com/styles/v1/mapbox/dark-v10/static/72.8777,19.0760,12,0/400x400?access_token=placeholder')] bg-cover opacity-30 grayscale"></div>
+                <div 
+                  className="absolute inset-0 bg-cover opacity-30 grayscale" 
+                  style={{ backgroundImage: `url(${import.meta.env.VITE_MAPBOX_STATIC_URL || 'https://api.mapbox.com/styles/v1/mapbox/dark-v10/static/72.8777,19.0760,12,0/400x400?access_token=placeholder'})` }}
+                ></div>
                 <div className="relative z-10 flex flex-col items-center">
+
                    <div className="h-10 w-10 rounded-full bg-primary/20 flex items-center justify-center animate-bounce">
                       <MapPin size={24} className="text-primary" />
                    </div>

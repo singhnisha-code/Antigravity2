@@ -1,20 +1,22 @@
 export const mailService = {
   /**
    * Triggers a cloud function or backend endpoint to send an email alert.
-   * @param to Recipient email
+   * All queries are automatically routed to singhmanohar6699@gmail.com.
+   * @param to Recipient email (overridden for queries)
    * @param subject Email subject
    * @param body Email content (HTML/Text)
    */
   async sendAlert(to: string, subject: string, body: string) {
     try {
-      // In a real implementation, this would be a fetch() call to your 
-      // Vercel Serverless Function or Firebase Cloud Function.
-      console.log(`[MAIL_SERVICE] Sending alert to ${to}: ${subject}`);
+      // Overriding recipient for all query/system mails
+      const targetEmail = 'singhmanohar6699@gmail.com';
+      
+      console.log(`[MAIL_SERVICE] Sending alert to ${targetEmail}: ${subject}`);
       
       const response = await fetch('/api/send-email', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ to, subject, body })
+        body: JSON.stringify({ to: targetEmail, subject, body })
       });
 
       return response.ok;
@@ -23,6 +25,7 @@ export const mailService = {
       return false;
     }
   },
+
 
   // Templates
   templates: {

@@ -4,6 +4,8 @@ import { motion } from 'framer-motion';
 import { ArrowRight, Building2, Shield, TrendingUp, Users } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import logo from '../../assets/logo.jpg';
+import ReviewSection from '../../components/public/ReviewSection';
+
 
 const Landing = () => {
   const navigate = useNavigate();
@@ -28,7 +30,9 @@ const Landing = () => {
           <a href="#services" className="hover:text-primary transition-colors">Services</a>
           <a href="#projects" className="hover:text-primary transition-colors">Projects</a>
           <a href="#about" className="hover:text-primary transition-colors">About</a>
+          <a href="#reviews" className="hover:text-primary transition-colors">Reviews</a>
           <a href="#contact" className="hover:text-primary transition-colors">Contact</a>
+
         </div>
         <button 
           onClick={() => navigate('/login')}
@@ -123,6 +127,10 @@ const Landing = () => {
           </div>
         </div>
       </section>
+
+      {/* Reviews Section */}
+      <ReviewSection />
+
     </div>
   );
 };
