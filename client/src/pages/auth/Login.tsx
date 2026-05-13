@@ -219,8 +219,21 @@ const Login = () => {
                 <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" className="h-5 w-5" />
                 Google Workspace
               </button>
+
+              <div className="mt-8 text-center">
+                <p className="text-xs text-slate-500 font-medium">
+                  Don't have an account?{' '}
+                  <button 
+                    onClick={() => navigate('/register')}
+                    className="text-primary hover:underline font-bold"
+                  >
+                    Register Here
+                  </button>
+                </p>
+              </div>
             </>
           )}
+
 
           <div id="recaptcha-container"></div>
         </div>

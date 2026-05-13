@@ -5,7 +5,9 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 // Pages
 const Landing = React.lazy(() => import('./pages/public/Landing'));
 const Login = React.lazy(() => import('./pages/auth/Login'));
+const Register = React.lazy(() => import('./pages/auth/Register'));
 const Dashboard = React.lazy(() => import('./pages/dashboard/MainDashboard'));
+
 
 const queryClient = new QueryClient();
 
@@ -21,6 +23,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Landing />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
             <Route path="/dashboard/*" element={<Dashboard />} />
           </Routes>
         </React.Suspense>

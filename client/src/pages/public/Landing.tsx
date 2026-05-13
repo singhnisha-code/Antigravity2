@@ -34,12 +34,21 @@ const Landing = () => {
           <a href="#contact" className="hover:text-primary transition-colors">Contact</a>
 
         </div>
-        <button 
-          onClick={() => navigate('/login')}
-          className="btn-gold text-sm px-5 py-2"
-        >
-          Client Login
-        </button>
+        <div className="hidden md:flex gap-4">
+          <button 
+            onClick={() => navigate('/login')}
+            className="px-5 py-2 rounded-lg border border-white/10 hover:bg-white/5 transition-all text-sm font-medium"
+          >
+            Sign In
+          </button>
+          <button 
+            onClick={() => navigate('/login')}
+            className="btn-gold text-sm px-5 py-2"
+          >
+            Get Started
+          </button>
+        </div>
+
       </nav>
 
       {/* Hero Section */}
@@ -127,6 +136,44 @@ const Landing = () => {
           </div>
         </div>
       </section>
+
+      {/* Access Portals */}
+      <section className="py-20 px-6 bg-secondary/50">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-8">
+            <div className="glass-card p-10 border-primary/20 hover:border-primary/40 transition-all">
+              <h3 className="text-2xl font-bold mb-4 flex items-center gap-3 text-gradient">
+                <Shield className="text-primary" /> Admin & Management
+              </h3>
+              <p className="text-slate-400 mb-8 leading-relaxed">
+                Secure access for administrators, site managers, and HR personnel. Manage tenders, inventory, and financials.
+              </p>
+              <button 
+                onClick={() => navigate('/login')}
+                className="btn-gold w-full py-4 uppercase tracking-widest text-sm"
+              >
+                Enter Admin Portal
+              </button>
+            </div>
+
+            <div className="glass-card p-10 border-white/5 hover:border-white/20 transition-all">
+              <h3 className="text-2xl font-bold mb-4 flex items-center gap-3">
+                <Users className="text-primary" /> Client & Staff Portal
+              </h3>
+              <p className="text-slate-400 mb-8 leading-relaxed">
+                Access your project status, submit reviews, and view attendance records for staff and contractors.
+              </p>
+              <button 
+                onClick={() => navigate('/login')}
+                className="w-full py-4 rounded-lg glass font-bold uppercase tracking-widest text-sm hover:bg-white/5 transition-all"
+              >
+                Access User Dashboard
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
 
       {/* Reviews Section */}
       <ReviewSection />
