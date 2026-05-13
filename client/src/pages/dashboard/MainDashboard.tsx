@@ -15,8 +15,10 @@ import {
   TrendingUp,
   Clock,
   IndianRupee,
-  MessageSquare
+  MessageSquare,
+  Shield
 } from 'lucide-react';
+
 
 import { Routes, Route, Link, useLocation } from 'react-router-dom';
 import logo from '../../assets/logo.jpg';
