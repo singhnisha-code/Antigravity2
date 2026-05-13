@@ -14,8 +14,9 @@ export interface UserProfile {
 
 const AUTHORIZED_ADMINS = [
   'singhmanohar6699@gmail.com',
-  'nisxsingh6356@gmail.com'
+  'singhnisha6356@gmail.com'
 ];
+
 
 export const useAuth = () => {
   const [user, setUser] = useState<User | null>(null);

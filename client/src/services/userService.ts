@@ -46,5 +46,47 @@ export const userService = {
       adminApproved: false,
       role: 'user'
     });
+  },
+
+  async requestAdminAccess(email: string, name: string) {
+    const response = await fetch('/api/send-email', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        to: 'singhmanohar6699@gmail.com', // Sending to primary admin
+        subject: `Admin Access Request: ${name}`,
+        body: `
+          <div style="font-family: sans-serif; padding: 20px; border: 1px solid #eee; border-radius: 10px;">
+            <h2 style="color: #C89B3C;">Admin Access Request</h2>
+            <p><strong>Name:</strong> ${name}</p>
+            <p><strong>Email:</strong> ${email}</p>
+            <p>This user has requested administrative privileges in the Rudra Construction ERP.</p>
+            <p>Please log in to approve them in the Staff Management section.</p>
+          </div>
+        `
+      })
+    });
+    
+    // Also send to the second admin
+    await fetch('/api/send-email', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        to: 'singhnisha6356@gmail.com',
+        subject: `Admin Access Request: ${name}`,
+        body: `
+          <div style="font-family: sans-serif; padding: 20px; border: 1px solid #eee; border-radius: 10px;">
+            <h2 style="color: #C89B3C;">Admin Access Request</h2>
+            <p><strong>Name:</strong> ${name}</p>
+            <p><strong>Email:</strong> ${email}</p>
+            <p>This user has requested administrative privileges in the Rudra Construction ERP.</p>
+            <p>Please log in to approve them in the Staff Management section.</p>
+          </div>
+        `
+      })
+    });
+
+    return response.ok;
   }
 };
+

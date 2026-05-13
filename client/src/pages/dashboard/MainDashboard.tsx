@@ -34,6 +34,8 @@ import FinancialsView from './FinancialsView';
 import SettingsView from './SettingsView';
 import Overview from './Overview';
 import ReviewManagement from './ReviewManagement';
+import { userService } from '../../services/userService';
+
 
 
 const SidebarItem = ({ icon: Icon, label, path, active, onClick }: any) => (
@@ -107,7 +109,23 @@ const MainDashboard = () => {
             </nav>
 
             <div className="p-6 border-t border-white/5">
+
+              {profile?.role !== 'admin' && (
+                <button 
+                  onClick={async () => {
+                    if (profile?.email && profile?.displayName) {
+                      const ok = await userService.requestAdminAccess(profile.email, profile.displayName);
+                      if (ok) alert("Request sent to admins!");
+                    }
+                  }}
+                  className="w-full mb-4 flex items-center gap-3 px-4 py-3 rounded-xl bg-primary/10 text-primary hover:bg-primary/20 transition-all text-xs font-bold uppercase tracking-widest border border-primary/20"
+                >
+                  <Shield size={16} />
+                  Seek Admin Permission
+                </button>
+              )}
               <div className="glass-card p-4 rounded-xl flex items-center gap-3 mb-4">
+
                 <div className="h-10 w-10 rounded-full bg-primary/20 border border-primary/30 flex items-center justify-center text-primary font-bold">
                   {profile?.displayName?.charAt(0) || 'U'}
                 </div>

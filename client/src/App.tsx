@@ -3,10 +3,11 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 // Pages
-const Landing = React.lazy(() => import('./pages/public/Landing'));
-const Login = React.lazy(() => import('./pages/auth/Login'));
-const Register = React.lazy(() => import('./pages/auth/Register'));
-const Dashboard = React.lazy(() => import('./pages/dashboard/MainDashboard'));
+import Landing from './pages/public/Landing';
+import Login from './pages/auth/Login';
+import Register from './pages/auth/Register';
+import Dashboard from './pages/dashboard/MainDashboard';
+
 
 
 const queryClient = new QueryClient();
