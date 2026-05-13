@@ -110,8 +110,11 @@ const ReviewManagement = () => {
           ))}
         </div>
       </div>
+    </div>
 
-      <div className="relative">
+    <div className="relative">
+
+
         <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500" size={18} />
         <input
           type="text"
